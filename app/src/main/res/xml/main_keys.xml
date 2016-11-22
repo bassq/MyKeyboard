@@ -54,10 +54,7 @@
             android:keyEdgeFlags="right"/>
     </Row>
     <Row>
-        <Key android:codes="-1" android:keyLabel="@string/CapsLock"
-            android:isModifier="true"
-            android:isSticky="true"
-            android:keyEdgeFlags="left"/>
+        <Key android:codes="32" android:keyLabel=" " android:keyEdgeFlags="left"/>
         <Key android:codes="122" android:keyLabel="z"/>
         <Key android:codes="120" android:keyLabel="x"/>
         <Key android:codes="99" android:keyLabel="c"/>
@@ -68,14 +65,20 @@
         <Key android:codes="60" android:keyLabel="&lt;"/>
         <Key android:codes="62" android:keyLabel="&gt;"/>
         <Key android:codes="19" android:keyLabel="@string/UpArrow"/>
+        <Key android:codes="32" android:keyLabel=" " android:keyEdgeFlags="right"/>
     </Row>
     <Row android:rowEdgeFlags="bottom">
-        <Key android:codes="32" android:keyLabel=" " android:keyEdgeFlags="left"/>
-        <Key android:codes="63,33,58" android:keyLabel="\? ! :"/>
-        <Key android:codes="35,64" android:keyLabel="\# \@"/>
-        <Key android:codes="44" android:keyLabel="," />
+        <Key android:codes="-1" android:keyLabel="@string/CapsLock"
+            android:isModifier="true"
+            android:isSticky="true"
+            android:keyEdgeFlags="left"/>
+        <Key android:codes="45" android:keyLabel="-"/>
+        <Key android:codes="61" android:keyLabel="="/>
+        <Key android:codes="92" android:keyLabel="\\"/>
+        <Key android:codes="96" android:keyLabel="`"/>
+        <Key android:codes="59" android:keyLabel=";"/>
+        <Key android:codes="39" android:keyLabel="'"/>
         <Key android:codes="47" android:keyLabel="/" />
-        <Key android:codes="32" android:keyLabel="SPACE" android:keyWidth="40%p" android:isRepeatable="true"/>
         <Key android:codes="21" android:keyLabel="@string/LeftArrow"/>
         <Key android:codes="20" android:keyLabel="@string/DownArrow"/>
         <Key android:codes="22" android:keyLabel="@string/RightArrow"  android:keyEdgeFlags="right"/>
