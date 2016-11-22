@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="BackSpase">&#x232b;</string>
+    <string name="Escape">&#x238b;</string>
+    <string name="Tab">&#x21e5;</string>
+    <string name="Control">ctrl</string>
+    <string name="Return">&#x23ce;</string>
+    <string name="CapsLock">&#x21ea;</string>
+    <string name="UpArrow">&#x2191;</string>
+    <string name="DownArrow">&#x2193;</string>
+    <string name="LeftArrow">&#x2190;</string>
+    <string name="RightArrow">&#x2192;</string>
+</resources>
