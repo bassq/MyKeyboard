@@ -7,6 +7,9 @@ an android software keyboard for Vim and Busybox sh.
 * developing under Android Studio 2.2.2.
 * an etude. this is not usable now.
 
+if you want finished keyboard code, go to next lines page.
+https://github.com/klausw/hackerskeyboard
+
 do not use in ordinary text editor,
 because this keyboard sends raw control characters to edit field.
 
