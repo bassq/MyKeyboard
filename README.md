@@ -20,8 +20,8 @@ but current implementation is shift lock and ctrl lock.
 
 to compile
 ----
-1. open config dialog
+1. open config dialog.
 [menu] Run -> Edit Configurations...
 
-2. set "Launch options" to "Nothing"
+2. set "Launch options" to "Nothing".
 these codes have no activities.
