@@ -8,8 +8,8 @@ an android software keyboard for Vim and Busybox sh.
 * an etude. this is not usable now.
 
 if you want finished keyboard, go to next lines page.
-https://play.google.com/store/apps/details?id=jp.co.pline.android.ctrlkeyboard
-https://github.com/klausw/hackerskeyboard
+* https://play.google.com/store/apps/details?id=jp.co.pline.android.ctrlkeyboard
+* https://github.com/klausw/hackerskeyboard
 
 
 do not use in ordinary text editor,
