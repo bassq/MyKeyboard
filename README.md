@@ -4,7 +4,7 @@ an android software keyboard for Vim and Busybox sh.
 
 * QWERTY layout keyboard for tablets.
 * requires android 4.1.2 or more.
-* developing under Android Studio 2.2.2.
+* developing with Android Studio 2.2.2.
 * an etude. this is not usable now.
 
 if you want finished keyboard, go to these pages.
@@ -17,3 +17,11 @@ because this keyboard sends raw control characters to edit field.
 
 i want to implement flick shift and flick ctrl,
 but current implementation is shift lock and ctrl lock.
+
+to compile
+----
+1. open config dialog
+[menu] Run -> Edit Configurations...
+
+2. set "Launch options" to "Nothing"
+these codes have no activities.
