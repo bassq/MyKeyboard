@@ -7,8 +7,10 @@ an android software keyboard for Vim and Busybox sh.
 * developing under Android Studio 2.2.2.
 * an etude. this is not usable now.
 
-if you want finished keyboard code, go to next lines page.
+if you want finished keyboard, go to next lines page.
+https://play.google.com/store/apps/details?id=jp.co.pline.android.ctrlkeyboard
 https://github.com/klausw/hackerskeyboard
+
 
 do not use in ordinary text editor,
 because this keyboard sends raw control characters to edit field.
