@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="10%p"
     android:horizontalGap="0px"
     android:verticalGap="0px"
     android:keyHeight="60dp"
     >
+    <!-- android:keyWidth="8%p" -->
     <Row>
         <Key android:codes="-111" android:keyLabel="@string/Escape" android:keyEdgeFlags="left"/>
         <Key android:codes="49" android:keyLabel="1"/>
@@ -35,7 +35,7 @@
         <Key android:codes="91" android:keyLabel="["/>
         <Key android:codes="93" android:keyLabel="]"
             android:keyEdgeFlags="right"/>
-            </Row>
+    </Row>
     <Row>
         <Key android:codes="-10" android:keyLabel="@string/Control"
             android:isModifier="true"
@@ -62,23 +62,22 @@
         <Key android:codes="98" android:keyLabel="b"/>
         <Key android:codes="110" android:keyLabel="n"/>
         <Key android:codes="109" android:keyLabel="m"/>
-        <Key android:codes="60" android:keyLabel="&lt;"/>
-        <Key android:codes="62" android:keyLabel="&gt;"/>
+        <Key android:codes="44" android:keyLabel=","/>
+        <Key android:codes="46" android:keyLabel="."/>
         <Key android:codes="19" android:keyLabel="@string/UpArrow"/>
         <Key android:codes="32" android:keyLabel=" " android:keyEdgeFlags="right"/>
     </Row>
     <Row android:rowEdgeFlags="bottom">
         <Key android:codes="-1" android:keyLabel="@string/CapsLock"
             android:isModifier="true"
-            android:isSticky="true"
             android:keyEdgeFlags="left"/>
-        <Key android:codes="45" android:keyLabel="-"/>
-        <Key android:codes="61" android:keyLabel="="/>
-        <Key android:codes="92" android:keyLabel="\\"/>
-        <Key android:codes="96" android:keyLabel="`"/>
-        <Key android:codes="59" android:keyLabel=";"/>
-        <Key android:codes="39" android:keyLabel="'"/>
-        <Key android:codes="47" android:keyLabel="/" />
+        <Key android:codes="45" android:keyLabel="_"/>
+        <Key android:codes="61" android:keyLabel="+"/>
+        <Key android:codes="92" android:keyLabel="|"/>
+        <Key android:codes="96" android:keyLabel="~"/>
+        <Key android:codes="59" android:keyLabel=":"/>
+        <Key android:codes="39" android:keyLabel="&quot;" />
+        <Key android:codes="47" android:keyLabel="\?" />
         <Key android:codes="21" android:keyLabel="@string/LeftArrow"/>
         <Key android:codes="20" android:keyLabel="@string/DownArrow"/>
         <Key android:codes="22" android:keyLabel="@string/RightArrow"  android:keyEdgeFlags="right"/>

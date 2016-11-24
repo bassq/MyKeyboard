@@ -13,18 +13,24 @@ import android.view.inputmethod.InputConnection;
 
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener{
 
+    /*
+    http://aics-app.sakura.ne.jp/blog/2015/03/02/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9android/
+    https://code.tutsplus.com/tutorials/create-a-custom-keyboard-on-android--cms-22615
+     */
     static final int KEYCODE_CTRL = -10;
     static final int KEYCODE_ESC = -111;
     private KeyboardView kv;
-    private Keyboard keyboard;
+    private Keyboard mainKB;
+    private Keyboard shiftKB;
     private boolean shiftLock = false;
     private boolean ctrlLock = false;
 
     @Override
     public View onCreateInputView() {
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
-        keyboard = new Keyboard(this, R.xml.main_keys);
-        kv.setKeyboard(keyboard);
+        mainKB = new Keyboard(this, R.xml.main_keys);
+        shiftKB = new Keyboard(this, R.xml.shift_keys);
+        kv.setKeyboard(mainKB);
         kv.setOnKeyboardActionListener(this);
         return kv;
     }
@@ -47,13 +53,14 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
             case Keyboard.KEYCODE_DELETE:
                 ic.deleteSurroundingText(1, 0);
                 break;
-            case Keyboard.KEYCODE_SHIFT:
-                shiftLock = !shiftLock;
-                keyboard.setShifted(shiftLock);
-                kv.invalidateAllKeys();
-                break;
             case Keyboard.KEYCODE_DONE:
                 ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
+                break;
+            case Keyboard.KEYCODE_SHIFT:
+                shiftLock = !shiftLock;
+                // mainKB.setShifted(shiftLock);
+                kv.setKeyboard(shiftLock ? shiftKB : mainKB);
+                kv.invalidateAllKeys();
                 break;
             case KEYCODE_CTRL:
                 ctrlLock = !ctrlLock;
@@ -73,9 +80,11 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                     code = Character.toUpperCase(code);
                     code = (char)((int)code - 0x40);
                 }
+                /*
                 if (shiftLock && Character.isLetter(code)) {
                     code = Character.toUpperCase(code);
                 }
+                */
                 ic.commitText(String.valueOf(code), 1);
                 break;
         }
