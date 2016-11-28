@@ -58,8 +58,8 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 break;
             case Keyboard.KEYCODE_SHIFT:
                 shiftLock = !shiftLock;
-                // mainKB.setShifted(shiftLock);
                 kv.setKeyboard(shiftLock ? shiftKB : mainKB);
+                kv.getKeyboard().setShifted(shiftLock); // set indicator LED
                 kv.invalidateAllKeys();
                 break;
             case KEYCODE_CTRL:

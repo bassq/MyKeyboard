@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="8%p"
+    android:keyWidth="7.6%p"
     android:horizontalGap="0px"
     android:verticalGap="0px"
-    android:keyHeight="60dp"
+    android:keyHeight="50dp"
     >
-    <!-- android:keyWidth="8%p" -->
+    <!-- android:keyWidth="7.6%p" -->
     <Row>
         <Key android:codes="-111" android:keyLabel="@string/Escape" android:keyEdgeFlags="left"/>
         <Key android:codes="33" android:keyLabel="!"/>
@@ -22,7 +22,8 @@
             android:isRepeatable="true" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
-        <Key android:codes="9" android:keyLabel="@string/Tab" android:keyEdgeFlags="left"/>
+        <Key android:codes="9" android:keyLabel="@string/Tab"
+            android:keyEdgeFlags="left"/>
         <Key android:codes="81" android:keyLabel="Q" />
         <Key android:codes="87" android:keyLabel="W"/>
         <Key android:codes="69" android:keyLabel="E"/>
@@ -33,10 +34,10 @@
         <Key android:codes="73" android:keyLabel="I"/>
         <Key android:codes="79" android:keyLabel="O"/>
         <Key android:codes="80" android:keyLabel="P"/>
-        <Key android:codes="123" android:keyLabel="\{"/>
-        <Key android:codes="125" android:keyLabel="\}"
+        <Key android:codes="123" android:keyLabel="{"/>
+        <Key android:codes="125" android:keyLabel="}"
             android:keyEdgeFlags="right"/>
-            </Row>
+    </Row>
     <Row>
         <Key android:codes="-10" android:keyLabel="@string/Control"
             android:isModifier="true"
@@ -70,9 +71,8 @@
     </Row>
     <Row android:rowEdgeFlags="bottom">
         <Key android:codes="-1" android:keyLabel="@string/CapsLock"
-            android:isModifier="true"
-            android:keyEdgeFlags="left"/>
-        <Key android:codes="45" android:keyLabel="-"/>
+            android:isModifier="true"/>
+        <Key android:codes="45" android:keyLabel="_"/>
         <Key android:codes="61" android:keyLabel="="/>
         <Key android:codes="92" android:keyLabel="\\"/>
         <Key android:codes="96" android:keyLabel="`"/>

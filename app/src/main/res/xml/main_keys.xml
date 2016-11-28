@@ -1,10 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="10%p"
     android:horizontalGap="0px"
     android:verticalGap="0px"
-    android:keyHeight="60dp"
+    android:keyHeight="50dp"
     >
     <!-- android:keyWidth="8%p" -->
+
+    <Row>
+        <Key android:codes="113" android:keyLabel="q" android:keyEdgeFlags="left"/>
+        <Key android:codes="119" android:keyLabel="w"/>
+        <Key android:codes="101" android:keyLabel="e"/>
+        <Key android:codes="114" android:keyLabel="r"/>
+        <Key android:codes="116" android:keyLabel="t"/>
+        <Key android:codes="121" android:keyLabel="y"/>
+        <Key android:codes="117" android:keyLabel="u"/>
+        <Key android:codes="105" android:keyLabel="i"/>
+        <Key android:codes="111" android:keyLabel="o"/>
+        <Key android:codes="112" android:keyLabel="p" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:codes="97" android:keyLabel="a"  android:keyEdgeFlags="left"/>
+        <Key android:codes="115" android:keyLabel="s"/>
+        <Key android:codes="100" android:keyLabel="d"/>
+        <Key android:codes="102" android:keyLabel="f"/>
+        <Key android:codes="103" android:keyLabel="g"/>
+        <Key android:codes="104" android:keyLabel="h"/>
+        <Key android:codes="106" android:keyLabel="j"/>
+        <Key android:codes="107" android:keyLabel="k"/>
+        <Key android:codes="108" android:keyLabel="l" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:codes="-1" android:keyLabel="shift" android:keyEdgeFlags="left"/>
+        <Key android:codes="122" android:keyLabel="z"/>
+        <Key android:codes="120" android:keyLabel="x"/>
+        <Key android:codes="99" android:keyLabel="c"/>
+        <Key android:codes="118" android:keyLabel="v"/>
+        <Key android:codes="98" android:keyLabel="b"/>
+        <Key android:codes="110" android:keyLabel="n"/>
+        <Key android:codes="109" android:keyLabel="m"/>
+        <Key android:codes="-5" android:keyLabel="BS" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:codes="-10" android:keyLabel="ctrl" android:keyEdgeFlags="left"/>
+        <Key android:codes="32" android:keyLabel="SPC"/>
+        <Key android:codes="-4" android:keyLabel="RET" android:keyEdgeFlags="right"/>
+    </Row>
+
+
+    <!--
+
+    #!/bin/awk -f
+BEGIN{
+	for( i =32; i < 128; i++){ code[sprintf("%c",i)] = i }
+	code["ESC"  ]	= -111;
+	code["BS"   ]	= -5;
+	code["TAB"  ]	= 9;
+	code["ctrl" ]	= -10;
+	code["RET"  ]	= -4;
+	code["SPC"  ]	= 32;
+	code["shift"]	= -1;
+}
+{
+	print "<Row>";
+	printTag( $1, "android:keyEdgeFlags=\"left\"");
+	for ( i = 2; i < NF; i++ ){
+		printTag( $i, "");
+	}
+	printTag( $NF, "android:keyEdgeFlags=\"right\"");
+	print "</Row>";
+}
+function printTag( label, option ){
+	option = option ? " " option : "";
+#	if ( label ~ /shift|ctrl/ ){
+#		option = " android:isModifier\"true\"\nandroid:isSticky=\"true"\n"
+#	}
+	printf("<Key android:codes=\"%s\" android:keyLabel=\"%s\"%s/>\n",
+		code[label], label, option);
+}
+
+
     <Row>
         <Key android:codes="-111" android:keyLabel="@string/Escape" android:keyEdgeFlags="left"/>
         <Key android:codes="49" android:keyLabel="1"/>
@@ -70,8 +145,9 @@
     <Row android:rowEdgeFlags="bottom">
         <Key android:codes="-1" android:keyLabel="@string/CapsLock"
             android:isModifier="true"
+            android:isSticky="true"
             android:keyEdgeFlags="left"/>
-        <Key android:codes="45" android:keyLabel="_"/>
+        <Key android:codes="45" android:keyLabel="-"/>
         <Key android:codes="61" android:keyLabel="+"/>
         <Key android:codes="92" android:keyLabel="|"/>
         <Key android:codes="96" android:keyLabel="~"/>
@@ -82,4 +158,5 @@
         <Key android:codes="20" android:keyLabel="@string/DownArrow"/>
         <Key android:codes="22" android:keyLabel="@string/RightArrow"  android:keyEdgeFlags="right"/>
     </Row>
+    -->
 </Keyboard>
