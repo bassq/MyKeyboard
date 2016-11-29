@@ -18,10 +18,17 @@ because this keyboard sends raw control characters to edit field.
 i want to implement flick shift and flick ctrl,
 but current implementation is shift lock and ctrl lock.
 
-to compile
-----
+## to compile
+
 1. open config dialog.
 [menu] Run -> Edit Configurations...
 
 2. set "Launch options" to "Nothing".
 these codes have no activities.
+
+## tools dir
+* keys.awk
+  keyboard layout xml tag generator awk script.
+ ```sh
+ awk -f keys.awk i-qwerty.txt
+ ```
