@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Spase">&#x2423;</string>
-    <string name="BackSpase">&#x232b;</string>
+    <string name="Space">&#x2423;</string>
+    <string name="BackSpace">&#x232b;</string>
     <string name="Escape">&#x238b;</string>
     <string name="Tab">&#x21e5;</string>
     <string name="Control">ctrl</string>

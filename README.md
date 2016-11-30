@@ -1,11 +1,11 @@
 # MyKeyboard
 
-an android software keyboard for Vim and Busybox sh.
-this is an etude. **this is not usable** now.
+an android soft keyboard for Vim and Busybox sh.
+this is an etude. **not usable** now.
 
-* QWERTY layout keyboard for tablets.
+* QWERTY layout soft keyboard (for tablets).
 * requires android 4.1.2 or more.
-* making  with Android Studio 2.2.2.
+* making with Android Studio 2.2.2.
 
 do not use in ordinary text editor,
 because this keyboard sends raw control characters to edit field.
@@ -13,7 +13,7 @@ because this keyboard sends raw control characters to edit field.
 i want to implement flick shift and flick ctrl,
 but current implementation is shift lock and ctrl lock.
 
-## reference
+## references
 
 ### official sample code of soft keyboard
 https://android.googlesource.com/platform/development/+/master/samples/SoftKeyboard
@@ -33,7 +33,8 @@ these codes have no activities.
 ## tool
 * keys.awk
   keyboard layout xml tag generator.
+  on windows, i use awk in [busybox-w32](https://frippery.org/busybox/).
  ```sh
  cd {path_to_this_project}/tool
- awk -f keys.awk i-qwerty.txt
+ awk -f keys.awk main-keys.txt
  ```
