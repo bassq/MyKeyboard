@@ -10,6 +10,7 @@ import android.inputmethodservice.KeyboardView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
+import android.widget.Toast;
 
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener{
 
@@ -21,15 +22,16 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     static final int KEYCODE_ESC = -111;
     private KeyboardView kv;
     private Keyboard mainKB;
-    private Keyboard shiftKB;
+    private Keyboard symbolKB;
     private boolean shiftLock = false;
     private boolean ctrlLock = false;
+    private boolean symLock = false;
 
     @Override
     public View onCreateInputView() {
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
         mainKB = new Keyboard(this, R.xml.main_keys);
-        shiftKB = new Keyboard(this, R.xml.shift_keys);
+        symbolKB = new Keyboard(this, R.xml.symbol_keys);
         kv.setKeyboard(mainKB);
         kv.setOnKeyboardActionListener(this);
         return kv;
@@ -58,12 +60,20 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 break;
             case Keyboard.KEYCODE_SHIFT:
                 shiftLock = !shiftLock;
-                kv.setKeyboard(shiftLock ? shiftKB : mainKB);
-                kv.getKeyboard().setShifted(shiftLock); // set indicator LED
+                kv.getKeyboard().setShifted(shiftLock);
                 kv.invalidateAllKeys();
+                break;
+            case Keyboard.KEYCODE_MODE_CHANGE:
+                symLock = !symLock;
+                kv.setKeyboard(symLock ? symbolKB : mainKB);
+                Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
+                // kv.getKeyboard().getModifierKeys().forEach()
+                // ctrlLock = false;
+                // ctrlLock LED
                 break;
             case KEYCODE_CTRL:
                 ctrlLock = !ctrlLock;
+                Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
             case KeyEvent.KEYCODE_DPAD_DOWN:
@@ -76,15 +86,12 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 break;
             default:
                 char code = (char) primaryCode;
-                if (ctrlLock && Character.isLetter(code)){
-                    code = Character.toUpperCase(code);
-                    code = (char)((int)code - 0x40);
-                }
-                /*
                 if (shiftLock && Character.isLetter(code)) {
                     code = Character.toUpperCase(code);
                 }
-                */
+                if (ctrlLock){
+                    code = (char)((int)code % 32);
+                }
                 ic.commitText(String.valueOf(code), 1);
                 break;
         }
