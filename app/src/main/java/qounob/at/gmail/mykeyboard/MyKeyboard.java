@@ -18,6 +18,9 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     http://aics-app.sakura.ne.jp/blog/2015/03/02/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9android/
     https://code.tutsplus.com/tutorials/create-a-custom-keyboard-on-android--cms-22615
      */
+
+    final static boolean DEBUG = true;
+
     static final int KEYCODE_CTRL = -10;
     static final int KEYCODE_ESC = -111;
     private KeyboardView kv;
@@ -66,14 +69,16 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
             case Keyboard.KEYCODE_MODE_CHANGE:
                 symLock = !symLock;
                 kv.setKeyboard(symLock ? symbolKB : mainKB);
-                Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
+                if(DEBUG)
+                    Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
                 // kv.getKeyboard().getModifierKeys().forEach()
                 // ctrlLock = false;
                 // ctrlLock LED
                 break;
             case KEYCODE_CTRL:
                 ctrlLock = !ctrlLock;
-                Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
+                if(DEBUG)
+                    Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
             case KeyEvent.KEYCODE_DPAD_DOWN:
