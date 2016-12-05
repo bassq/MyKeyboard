@@ -26,8 +26,8 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     private KeyboardView kv;
     private Keyboard mainKB;
     private Keyboard symbolKB;
-    private Keyboard.Key mainCtrlKey;
-    private Keyboard.Key symbolCtrlKey;
+    private Keyboard.Key mainKBCtrl;
+    private Keyboard.Key symbolKBCtrl;
     private boolean shiftLock = false;
     private boolean ctrlLock = false;
     private boolean symLock = false;
@@ -37,8 +37,8 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
         mainKB = new Keyboard(this, R.xml.main_keys);
         symbolKB = new Keyboard(this, R.xml.symbol_keys);
-        mainCtrlKey = getCtrlKey(mainKB);
-        symbolCtrlKey = getCtrlKey((symbolKB));
+        mainKBCtrl = getCtrlKey(mainKB);
+        symbolKBCtrl = getCtrlKey(symbolKB);
         kv.setKeyboard(mainKB);
         kv.setOnKeyboardActionListener(this);
         return kv;
@@ -81,6 +81,8 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 break;
             case Keyboard.KEYCODE_MODE_CHANGE:
                 symLock = !symLock;
+                mainKBCtrl.on = symLock;
+                symbolKBCtrl.on = symLock;
                 kv.setKeyboard(symLock ? symbolKB : mainKB);
                 if(DEBUG)
                     Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
