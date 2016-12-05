@@ -52,7 +52,9 @@
         <Key android:codes="91" android:keyLabel="["/>
         <Key android:codes="93" android:keyLabel="]"/>
         <Key android:codes="47" android:keyLabel="/"/>
-        <Key android:codes="-5" android:keyLabel="@string/BackSpace" android:keyEdgeFlags="right"/>
+        <Key android:codes="-5" android:keyLabel="@string/BackSpace"
+            android:isRepeatable="true"
+            android:keyEdgeFlags="right"/>
     </Row>
     <Row>
         <Key android:codes="-2" android:keyLabel="mode" android:keyEdgeFlags="left"/>

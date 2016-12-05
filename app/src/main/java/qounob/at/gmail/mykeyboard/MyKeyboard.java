@@ -2,6 +2,10 @@ package qounob.at.gmail.mykeyboard;
 
 /**
  * Created by user on 2016/11/18.
+ *
+ * start with the pages...
+ http://aics-app.sakura.ne.jp/blog/2015/03/02/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9android/
+ https://code.tutsplus.com/tutorials/create-a-custom-keyboard-on-android--cms-22615
  */
 
 import android.inputmethodservice.InputMethodService;
@@ -14,11 +18,6 @@ import android.widget.Toast;
 
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener{
 
-    /*
-    http://aics-app.sakura.ne.jp/blog/2015/03/02/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9android/
-    https://code.tutsplus.com/tutorials/create-a-custom-keyboard-on-android--cms-22615
-     */
-
     final static boolean DEBUG = true;
 
     static final int KEYCODE_CTRL = -10;
@@ -26,31 +25,18 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     private KeyboardView kv;
     private Keyboard mainKB;
     private Keyboard symbolKB;
-    private Keyboard.Key mainKBCtrl;
-    private Keyboard.Key symbolKBCtrl;
     private boolean shiftLock = false;
     private boolean ctrlLock = false;
-    private boolean symLock = false;
+    private boolean symMode = false;
 
     @Override
     public View onCreateInputView() {
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
         mainKB = new Keyboard(this, R.xml.main_keys);
         symbolKB = new Keyboard(this, R.xml.symbol_keys);
-        mainKBCtrl = getCtrlKey(mainKB);
-        symbolKBCtrl = getCtrlKey(symbolKB);
         kv.setKeyboard(mainKB);
         kv.setOnKeyboardActionListener(this);
         return kv;
-    }
-    private Keyboard.Key getCtrlKey(Keyboard kb){
-        Keyboard.Key result = null;
-        for(Keyboard.Key key: kb.getModifierKeys()){
-            if(key.codes[0] == KEYCODE_CTRL){
-                result = key;
-            }
-        }
-        return result;
     }
 
     @Override
@@ -80,19 +66,16 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 kv.invalidateAllKeys();
                 break;
             case Keyboard.KEYCODE_MODE_CHANGE:
-                symLock = !symLock;
-                mainKBCtrl.on = symLock;
-                symbolKBCtrl.on = symLock;
-                kv.setKeyboard(symLock ? symbolKB : mainKB);
+                symMode = !symMode;
+                kv.setKeyboard(symMode ? symbolKB : mainKB);
+                getKeyOf(KEYCODE_CTRL).on = ctrlLock;
+                kv.invalidateAllKeys();
                 if(DEBUG)
-                    Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
-                // kv.getKeyboard().getModifierKeys().forEach()
-                // ctrlLock = false;
-                // ctrlLock LED
+                    Toast.makeText(this, symMode ? "sym on" : "sym off", Toast.LENGTH_SHORT).show();
                 break;
-            case KEYCODE_CTRL:
-                // TODO: ctrl status is not match ctrlLock status
-                ctrlLock = !ctrlLock;
+             case KEYCODE_CTRL:
+                 ctrlLock = !ctrlLock;
+                 getKeyOf(KEYCODE_CTRL).on = ctrlLock;
                 if(DEBUG)
                     Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
                 break;
@@ -116,6 +99,17 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 ic.commitText(String.valueOf(code), 1);
                 break;
         }
+    }
+
+    private Keyboard.Key getKeyOf(int targetKeyCode){
+        Keyboard.Key result = null;
+        for(Keyboard.Key key : kv.getKeyboard().getKeys()){
+            // kv.getKeyboard().getModifierKeys() // NG
+            if (key.codes[0] == targetKeyCode){
+                result = key;
+            }
+        }
+        return result;
     }
 
     @Override

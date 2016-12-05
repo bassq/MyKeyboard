@@ -40,7 +40,9 @@
         <Key android:codes="98" android:keyLabel="b"/>
         <Key android:codes="110" android:keyLabel="n"/>
         <Key android:codes="109" android:keyLabel="m"/>
-        <Key android:codes="-5" android:keyLabel="@string/BackSpace" android:keyEdgeFlags="right"/>
+        <Key android:codes="-5" android:keyLabel="@string/BackSpace"
+            android:isRepeatable="true"
+            android:keyEdgeFlags="right"/>
     </Row>
     <Row>
         <Key android:codes="-2" android:keyLabel="mode" android:keyEdgeFlags="left"/>
