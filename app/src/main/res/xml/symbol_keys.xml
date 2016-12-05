@@ -61,7 +61,9 @@
         <Key android:codes="-10" android:keyLabel="@string/Control"
             android:isModifier="true" android:isSticky="true"
             />
-        <Key android:codes="-6" android:keyLabel="meta"/>
+        <Key android:codes="-6" android:keyLabel="meta"
+            android:isModifier="true" android:isSticky="true"
+        />
         <Key android:codes="44" android:keyLabel=","/>
         <Key android:codes="46" android:keyLabel="."/>
         <Key android:codes="124" android:keyLabel="|"/>

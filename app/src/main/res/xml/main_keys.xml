@@ -49,7 +49,9 @@
         <Key android:codes="-10" android:keyLabel="@string/Control"
             android:isModifier="true" android:isSticky="true"
             />
-        <Key android:codes="-6" android:keyLabel="meta"/>
+        <Key android:codes="-6" android:keyLabel="meta"
+            android:isModifier="true" android:isSticky="true"
+        />
         <Key android:codes="58" android:keyLabel=":"/>
         <Key android:codes="32" android:keyLabel="@string/Space" android:keyWidth="30%p"/>
         <Key android:codes="9" android:keyLabel="@string/Tab"/>

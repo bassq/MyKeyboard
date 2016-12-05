@@ -14,7 +14,6 @@ import android.inputmethodservice.KeyboardView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
-import android.widget.Toast;
 
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener{
 
@@ -27,6 +26,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     private Keyboard symbolKB;
     private boolean shiftLock = false;
     private boolean ctrlLock = false;
+    private boolean metaLock = false;
     private boolean symMode = false;
 
     @Override
@@ -69,15 +69,16 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 symMode = !symMode;
                 kv.setKeyboard(symMode ? symbolKB : mainKB);
                 getKeyOf(KEYCODE_CTRL).on = ctrlLock;
+                getKeyOf(Keyboard.KEYCODE_ALT).on = metaLock;
                 kv.invalidateAllKeys();
-                if(DEBUG)
-                    Toast.makeText(this, symMode ? "sym on" : "sym off", Toast.LENGTH_SHORT).show();
                 break;
-             case KEYCODE_CTRL:
+            case KEYCODE_CTRL:
                  ctrlLock = !ctrlLock;
                  getKeyOf(KEYCODE_CTRL).on = ctrlLock;
-                if(DEBUG)
-                    Toast.makeText(this, ctrlLock ? "ctrl" : "not ctrl", Toast.LENGTH_SHORT).show();
+                break;
+            case Keyboard.KEYCODE_ALT:
+                metaLock = !metaLock;
+                getKeyOf(Keyboard.KEYCODE_ALT).on = metaLock;
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
             case KeyEvent.KEYCODE_DPAD_DOWN:
@@ -96,6 +97,9 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 if (ctrlLock){
                     code = (char)((int)code % 32);
                 }
+                if (metaLock){
+                    code = (char)((int)code + 128);
+                }
                 ic.commitText(String.valueOf(code), 1);
                 break;
         }
@@ -107,6 +111,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
             // kv.getKeyboard().getModifierKeys() // NG
             if (key.codes[0] == targetKeyCode){
                 result = key;
+                break;
             }
         }
         return result;

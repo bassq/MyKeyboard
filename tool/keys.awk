@@ -40,7 +40,7 @@ function printTag( label, option ){
 	if ( label ~ /BS|SP/ ){
 		option = "\n android:isRepeatable=\"true\"\n" option
 	}
-	if ( label ~ /SH|CT/ ){
+	if ( label ~ /SH|CT|MT/ ){
 		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"\n" option
 	}
 	printf("<Key android:codes=\"%s\" android:keyLabel=\"%s\"%s/>\n",
