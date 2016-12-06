@@ -1,4 +1,4 @@
-#!/bin/awk -f
+#!/usr/bin/awk -f
 BEGIN{
 	for( i =32; i < 128; i++){ code[sprintf("%c",i)] = i }
 	code["SP"] =   32; face["SP"] = "@string/Space";
@@ -8,6 +8,7 @@ BEGIN{
 	code["CT"] =  -10; face["CT"] = "@string/Control";
 	code["CR"] =   -4; face["CR"] = "@string/Return";
 	code["SH"] =   -1; face["SH"] = "@string/CapsLock";
+	code["DL"] -  127; face["DL"] = "Del";
 	code["MT"] =   -6; face["MT"] = "meta";
 	code["MD"] =   -2; face["MD"] = "mode";
 	code["MN"] =   82; face["MN"] = "menu";
@@ -37,7 +38,7 @@ BEGIN{
 }
 function printTag( label, option ){
 	option = option ? " " option : "";
-	if ( label ~ /BS|SP/ ){
+	if ( label ~ /BS|SP|DL/ ){
 		option = "\n android:isRepeatable=\"true\"\n" option
 	}
 	if ( label ~ /SH|CT|MT/ ){
