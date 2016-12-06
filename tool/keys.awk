@@ -44,6 +44,5 @@ function printTag( label, option ){
 		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"\n" option
 	}
 	printf("<Key android:codes=\"%s\" android:keyLabel=\"%s\"%s/>\n",
-		code[label], face[label] ? face[label] : label, option
-	);
+		code[label], face[label] ? face[label] : label, option );
 }

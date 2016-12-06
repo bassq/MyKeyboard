@@ -18,23 +18,23 @@ import android.view.inputmethod.InputConnection;
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener{
 
     final static boolean DEBUG = true;
+    final static int KEYCODE_CTRL = -10;
+    final static int KEYCODE_ESC = -111;
 
-    static final int KEYCODE_CTRL = -10;
-    static final int KEYCODE_ESC = -111;
     private KeyboardView kv;
-    private Keyboard mainKB;
-    private Keyboard symbolKB;
+    private Keyboard mainKeyboard;
+    private Keyboard symbolKeyboard;
     private boolean shiftLock = false;
     private boolean ctrlLock = false;
     private boolean metaLock = false;
-    private boolean symMode = false;
+    private boolean symbolMode = false;
 
     @Override
     public View onCreateInputView() {
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
-        mainKB = new Keyboard(this, R.xml.main_keys);
-        symbolKB = new Keyboard(this, R.xml.symbol_keys);
-        kv.setKeyboard(mainKB);
+        mainKeyboard = new Keyboard(this, R.xml.main_keys);
+        symbolKeyboard = new Keyboard(this, R.xml.symbol_keys);
+        kv.setKeyboard(mainKeyboard);
         kv.setOnKeyboardActionListener(this);
         return kv;
     }
@@ -66,19 +66,19 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 kv.invalidateAllKeys();
                 break;
             case Keyboard.KEYCODE_MODE_CHANGE:
-                symMode = !symMode;
-                kv.setKeyboard(symMode ? symbolKB : mainKB);
-                getKeyOf(KEYCODE_CTRL).on = ctrlLock;
-                getKeyOf(Keyboard.KEYCODE_ALT).on = metaLock;
+                symbolMode = !symbolMode;
+                kv.setKeyboard(symbolMode ? symbolKeyboard : mainKeyboard);
+                keyOf(KEYCODE_CTRL).on = ctrlLock;
+                keyOf(Keyboard.KEYCODE_ALT).on = metaLock;
                 kv.invalidateAllKeys();
                 break;
-            case KEYCODE_CTRL:
+            case KEYCODE_CTRL :
                  ctrlLock = !ctrlLock;
-                 getKeyOf(KEYCODE_CTRL).on = ctrlLock;
+                 keyOf(KEYCODE_CTRL).on = ctrlLock;
                 break;
             case Keyboard.KEYCODE_ALT:
                 metaLock = !metaLock;
-                getKeyOf(Keyboard.KEYCODE_ALT).on = metaLock;
+                keyOf(Keyboard.KEYCODE_ALT).on = metaLock;
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
             case KeyEvent.KEYCODE_DPAD_DOWN:
@@ -105,7 +105,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         }
     }
 
-    private Keyboard.Key getKeyOf(int targetKeyCode){
+    private Keyboard.Key keyOf(int targetKeyCode){
         Keyboard.Key result = null;
         for(Keyboard.Key key : kv.getKeyboard().getKeys()){
             // kv.getKeyboard().getModifierKeys() // NG
