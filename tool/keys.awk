@@ -12,7 +12,7 @@ BEGIN{
 	code["CT"] =  -10; face["CT"] = "@string/Control";
 	code["CR"] =   -4; face["CR"] = "@string/Return";
 	code["SH"] =   -1; face["SH"] = "@string/CapsLock";
-	code["DL"] -  127; face["DL"] = "Del";
+	code["DL"] =  127; face["DL"] = "Del";
 	code["MT"] =   -6; face["MT"] = "meta";
 	code["MD"] =   -2; face["MD"] = "mode";
 	code["MN"] =   82; face["MN"] = "menu";

@@ -23,6 +23,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
     private KeyboardView kv;
     private Keyboard mainKeyboard;
+    private Keyboard shiftKeyboard;
     private Keyboard symbolKeyboard;
     private boolean shiftLock = false;
     private boolean ctrlLock = false;
@@ -33,6 +34,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     public View onCreateInputView() {
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
         mainKeyboard = new Keyboard(this, R.xml.main_keys);
+        shiftKeyboard = new Keyboard(this, R.xml.shift_keys);
         symbolKeyboard = new Keyboard(this, R.xml.symbol_keys);
         kv.setKeyboard(mainKeyboard);
         kv.setOnKeyboardActionListener(this);
@@ -62,15 +64,20 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 break;
             case Keyboard.KEYCODE_SHIFT:
                 shiftLock = !shiftLock;
+                /*
                 kv.getKeyboard().setShifted(shiftLock);
                 kv.invalidateAllKeys();
+                */
+                kv.setKeyboard(shiftLock ? shiftKeyboard : mainKeyboard);
+                keyOf(Keyboard.KEYCODE_SHIFT).on = shiftLock;
                 break;
             case Keyboard.KEYCODE_MODE_CHANGE:
+                //TODO: unstable at symbol to main
                 symbolMode = !symbolMode;
+                keyOf(Keyboard.KEYCODE_SHIFT).on = shiftLock;
                 kv.setKeyboard(symbolMode ? symbolKeyboard : mainKeyboard);
                 keyOf(KEYCODE_CTRL).on = ctrlLock;
                 keyOf(Keyboard.KEYCODE_ALT).on = metaLock;
-                kv.invalidateAllKeys();
                 break;
             case KEYCODE_CTRL :
                  ctrlLock = !ctrlLock;
@@ -91,9 +98,11 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 break;
             default:
                 char code = (char) primaryCode;
+                /*
                 if (shiftLock && Character.isLetter(code)) {
                     code = Character.toUpperCase(code);
                 }
+                */
                 if (ctrlLock){
                     code = (char)((int)code % 32);
                 }
