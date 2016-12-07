@@ -47,6 +47,10 @@ function printTag( label, option ){
 	if ( label ~ /SH|CT|MT/ ){
 		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"\n" option ;
 	}
+
+	# another option
+	# android:keyWidth="30%p" 
+
 	printf("<Key android:codes=\"%s\" android:keyLabel=\"%s\"%s/>\n",
 		code[label], face[label] ? face[label] : label, option );
 }
