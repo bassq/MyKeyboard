@@ -1,6 +1,10 @@
 #!/usr/bin/awk -f
 BEGIN{
-	for( i =32; i < 128; i++){ code[sprintf("%c",i)] = i }
+	if (ARGC == 1){
+		print "usage: keys.awk source.txt [ -v part=main ]";
+		exit;
+	}
+	for( i = 32; i < 128; i++){ code[sprintf("%c",i)] = i }
 	code["SP"] =   32; face["SP"] = "@string/Space";
 	code["BS"] =   -5; face["BS"] = "@string/BackSpace";
 	code["ES"] = -111; face["ES"] = "@string/Escape";
@@ -25,24 +29,23 @@ BEGIN{
 	face["<"]  = "&lt;";
 	face[">"]  = "&gt;";
 }
-/^$/   { next } # skip blank line
-/^#../ { next } # skip comment
-{
+
+$0 ~ part , NF == 0 {
+	if (NF <= 1) next;
 	print "<Row>";
-	printTag( $1, "android:keyEdgeFlags=\"left\"");
-	for ( i = 2; i < NF; i++ ){
-		printTag( $i, "");
-	}
-	printTag( $NF, "android:keyEdgeFlags=\"right\"");
+	printTag( $1, "android:keyEdgeFlags=\"left\"" );
+	for ( i = 2; i < NF; i++ ){ printTag( $i ); }
+	printTag( $NF, "android:keyEdgeFlags=\"right\"" );
 	print "</Row>";
 }
+
 function printTag( label, option ){
 	option = option ? " " option : "";
 	if ( label ~ /BS|SP|DL/ ){
-		option = "\n android:isRepeatable=\"true\"\n" option
+		option = "\n android:isRepeatable=\"true\"\n" option ;
 	}
 	if ( label ~ /SH|CT|MT/ ){
-		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"\n" option
+		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"\n" option ;
 	}
 	printf("<Key android:codes=\"%s\" android:keyLabel=\"%s\"%s/>\n",
 		code[label], face[label] ? face[label] : label, option );
