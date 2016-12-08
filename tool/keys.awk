@@ -1,16 +1,21 @@
-#!/bin/awk -f
+#!/usr/bin/awk -f
 BEGIN{
-	for( i =32; i < 128; i++){ code[sprintf("%c",i)] = i }
+	if (ARGC == 1){
+		print "usage: keys.awk keyboard_layout.txt [ -v part=main ]" >> "/dev/stderr";
+		exit 1;
+	}
+	for( i = 32; i < 128; i++){ code[sprintf("%c",i)] = i }
 	code["SP"] =   32; face["SP"] = "@string/Space";
 	code["BS"] =   -5; face["BS"] = "@string/BackSpace";
+	code["DL"] =  127; face["DL"] = "@string/Delete";
 	code["ES"] = -111; face["ES"] = "@string/Escape";
 	code["TB"] =    9; face["TB"] = "@string/Tab";
 	code["CT"] =  -10; face["CT"] = "@string/Control";
 	code["CR"] =   -4; face["CR"] = "@string/Return";
 	code["SH"] =   -1; face["SH"] = "@string/CapsLock";
-	code["MT"] =   -6; face["MT"] = "meta";
-	code["MD"] =   -2; face["MD"] = "mode";
-	code["MN"] =   82; face["MN"] = "menu";
+	code["MT"] =   -6; face["MT"] = "@string/Meta";
+	code["MD"] =   -2; face["MD"] = "@string/Mode";
+	code["MN"] =   82; face["MN"] = "@string/Menu";
 	code["zk"] =   19; face["zk"] = "@string/UpArrow";
 	code["zj"] =   20; face["zj"] = "@string/DownArrow";
 	code["zh"] =   21; face["zh"] = "@string/LeftArrow";
@@ -24,25 +29,33 @@ BEGIN{
 	face["<"]  = "&lt;";
 	face[">"]  = "&gt;";
 }
-/^$/   { next } # skip blank line
-/^#../ { next } # skip comment
-{
-	print "<Row>";
-	printTag( $1, "android:keyEdgeFlags=\"left\"");
-	for ( i = 2; i < NF; i++ ){
-		printTag( $i, "");
-	}
-	printTag( $NF, "android:keyEdgeFlags=\"right\"");
+
+$0 ~ part , NF == 0 {
+	if (NF <= 1) next;
+	width = 100 / NF;
+	print "<Row android:keyWidth=\"" width "%p\">";
+	printTag( $1, "android:keyEdgeFlags=\"left\"" );
+	for ( i = 2; i < NF; i++ ){ printTag( $i ); }
+	printTag( $NF, "android:keyEdgeFlags=\"right\"" );
 	print "</Row>";
 }
+
 function printTag( label, option ){
 	option = option ? " " option : "";
-	if ( label ~ /BS|SP/ ){
-		option = "\n android:isRepeatable=\"true\"\n" option
+	if ( label ~ /BS|SP|DL/ ){
+		option = "\n android:isRepeatable=\"true\"\n" option ;
 	}
 	if ( label ~ /SH|CT|MT/ ){
-		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"\n" option
+		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"\n" option ;
 	}
+
+	# another option
+	# android:keyWidth="30%p" 
+
 	printf("<Key android:codes=\"%s\" android:keyLabel=\"%s\"%s/>\n",
 		code[label], face[label] ? face[label] : label, option );
+	if ( !code[label] ) {
+		print "error: unknown key label :", label >> "/dev/stderr";
+		exit 1;
+	}
 }
