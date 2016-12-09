@@ -4,57 +4,61 @@ BEGIN{
 		print "usage: keys.awk keyboard_layout.txt [ -v part=main ]" >> "/dev/stderr";
 		exit 1;
 	}
-	for( i = 32; i < 128; i++){ code[sprintf("%c",i)] = i }
-	code["SP"] =   32; face["SP"] = "@string/Space";
-	code["BS"] =   -5; face["BS"] = "@string/BackSpace";
-	code["DL"] =  127; face["DL"] = "@string/Delete";
-	code["ES"] = -111; face["ES"] = "@string/Escape";
-	code["TB"] =    9; face["TB"] = "@string/Tab";
-	code["CT"] =  -10; face["CT"] = "@string/Control";
-	code["CR"] =   -4; face["CR"] = "@string/Return";
-	code["SH"] =   -1; face["SH"] = "@string/CapsLock";
-	code["MT"] =   -6; face["MT"] = "@string/Meta";
-	code["MD"] =   -2; face["MD"] = "@string/Mode";
-	code["MN"] =   82; face["MN"] = "@string/Menu";
-	code["zk"] =   19; face["zk"] = "@string/UpArrow";
-	code["zj"] =   20; face["zj"] = "@string/DownArrow";
-	code["zh"] =   21; face["zh"] = "@string/LeftArrow";
-	code["zl"] =   22; face["zl"] = "@string/RightArrow";
-	face["@"]  = "\\@";
-	face["\\"] = "\\\\";
-	face["'"]  = "&apos;";
-	face["\""] = "&quot;";
-	face["&"]  = "&amp;";
-	face["?"]  = "\\?";
-	face["<"]  = "&lt;";
-	face[">"]  = "&gt;";
+	
+	# make char code hash. AWK does not have char to integer function.
+	for( i = 32; i < 128; i++){ codeOf[sprintf("%c",i)] = i }
+
+	# extend char code hash.
+	codeOf["SP"] =   32; faceOf["SP"] = "@string/Space";
+	codeOf["BS"] =   -5; faceOf["BS"] = "@string/BackSpace";
+	codeOf["DL"] =  127; faceOf["DL"] = "@string/Delete";
+	codeOf["ES"] = -111; faceOf["ES"] = "@string/Escape";
+	codeOf["TB"] =    9; faceOf["TB"] = "@string/Tab";
+	codeOf["CT"] =  -10; faceOf["CT"] = "@string/Control";
+	codeOf["CR"] =   -4; faceOf["CR"] = "@string/Return";
+	codeOf["SH"] =   -1; faceOf["SH"] = "@string/CapsLock";
+	codeOf["MT"] =   -6; faceOf["MT"] = "@string/Meta";
+	codeOf["MD"] =   -2; faceOf["MD"] = "@string/Mode";
+	codeOf["MN"] =   82; faceOf["MN"] = "@string/Menu";
+	# keycode 82? this means "R".
+	codeOf["zk"] =   19; faceOf["zk"] = "@string/UpArrow";
+	codeOf["zj"] =   20; faceOf["zj"] = "@string/DownArrow";
+	codeOf["zh"] =   21; faceOf["zh"] = "@string/LeftArrow";
+	codeOf["zl"] =   22; faceOf["zl"] = "@string/RightArrow";
+	faceOf["@"]  = "\\@";
+	faceOf["\\"] = "\\\\";
+	faceOf["'"]  = "&apos;";
+	faceOf["\""] = "&quot;";
+	faceOf["&"]  = "&amp;";
+	faceOf["?"]  = "\\?";
+	faceOf["<"]  = "&lt;";
+	faceOf[">"]  = "&gt;";
 }
 
 $0 ~ part , NF == 0 {
 	if (NF <= 1) next;
-	width = 100 / NF;
-	print "<Row android:keyWidth=\"" width "%p\">";
+
+	print "<Row android:keyWidth=\"" 100/NF "%p\">";
 	printTag( $1, "android:keyEdgeFlags=\"left\"" );
-	for ( i = 2; i < NF; i++ ){ printTag( $i ); }
-	printTag( $NF, "android:keyEdgeFlags=\"right\"" );
+	for ( i = 2; i < NF; i++ ){
+		printTag( $i );
+	}
+	printTag($NF, "android:keyEdgeFlags=\"right\"" );
 	print "</Row>";
 }
 
 function printTag( label, option ){
 	option = option ? " " option : "";
 	if ( label ~ /BS|SP|DL/ ){
-		option = "\n android:isRepeatable=\"true\"\n" option ;
+		option = "\n android:isRepeatable=\"true\"" option;
 	}
 	if ( label ~ /SH|CT|MT/ ){
-		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"\n" option ;
+		option = "\n android:isModifier=\"true\" android:isSticky=\"true\"" option;
 	}
-
-	# another option
-	# android:keyWidth="30%p" 
-
 	printf("<Key android:codes=\"%s\" android:keyLabel=\"%s\"%s/>\n",
-		code[label], face[label] ? face[label] : label, option );
-	if ( !code[label] ) {
+		codeOf[label], faceOf[label] ? faceOf[label] : label, option );
+
+	if ( !codeOf[label] ) {
 		print "error: unknown key label :", label >> "/dev/stderr";
 		exit 1;
 	}

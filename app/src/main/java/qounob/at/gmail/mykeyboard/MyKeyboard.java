@@ -37,6 +37,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         mainKeyboard = new Keyboard(this, R.xml.main_keys);
         shiftKeyboard = new Keyboard(this, R.xml.shift_keys);
         symbolKeyboard = new Keyboard(this, R.xml.symbol_keys);
+        kv.setKeyboard(symbolKeyboard);
         kv.setKeyboard(mainKeyboard);
         kv.setOnKeyboardActionListener(this);
         return kv;

@@ -32,7 +32,9 @@ this project has no activities.
 
 ## tool
 * keys.awk
-  output tags of keyboard layout xml files (xml/*_keys.xml).
+  outputs tags for keyboard layout xml files (xml/*_keys.xml).
+  edit layout.txt as you like.
+
   on windows, i use awk in [busybox-w32](https://frippery.org/busybox/).
 
 ```sh
