@@ -5,7 +5,7 @@ menu key (button) does nothing now.
 
 * QWERTY layout soft keyboard.
 * requires android 4.1.2 or more.
-* making with Android Studio 2.2.2.
+* made in Android Studio 2.2.2.
 
 do not use in ordinary text editor.
 because this keyboard sends raw control characters to edit field.
@@ -35,12 +35,15 @@ this project has no activities.
   outputs tags for keyboard layout xml files (xml/*_keys.xml).
   edit layout.txt as you like.
 
-  on windows, i use awk in [busybox-w32](https://frippery.org/busybox/).
+  windows' version of git includes GAWK.
+  this script can run in GitBash.
+
+  but i had used AWK in [busybox-w32](https://frippery.org/busybox/)...
 
 ```sh
 cd {path_to_this_project}/tool
-awk -f keys.awk layout.txt -v part=main
-awk -f keys.awk layout.txt -v part=shift
-awk -f keys.awk layout.txt -v part=symbol
+awk -f keys.awk -v part=main  layout.txt # gawk
+awk -f keys.awk -v part=shift layout.txt # busybox awk
+awk -f keys.awk layout.txt -v part=symbol # busybox awk
 awk -f keys.awk symKeys1.txt
 ```
